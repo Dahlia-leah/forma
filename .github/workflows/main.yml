@@ -1,20 +1,28 @@
-name: Form‑AutoFill
+name: Google Form Auto Submitter
 
 on:
   schedule:
-    # Runs daily at 00:00 UTC → 02:00 Cairo time
-    - cron: '55 5 * * *'
-  workflow_dispatch:  # manual “Run workflow” button
+    - cron: '55 5 * * *' # Every day at 07:55 Cairo time (UTC+2 = 5:55 UTC)
+  workflow_dispatch: # Allows manual run
 
 jobs:
-  build:
+  run-bot:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with: node-version: '18'
-      - run: npm ci
-      - run: node index.js
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run bot
+        run: node index.js
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
