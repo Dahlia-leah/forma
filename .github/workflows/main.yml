@@ -1,28 +1,30 @@
-name: Google Form Auto Submitter
+name: Run Puppeteer Form Bot
 
 on:
+  workflow_dispatch: # manual trigger
   schedule:
-    - cron: '55 5 * * *' # Every day at 07:55 Cairo time (UTC+2 = 5:55 UTC)
-  workflow_dispatch: # Allows manual run
+    - cron: '*/15 * * * *'  # every 15 minutes, adjust as needed
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+    - name: Checkout repo
+      uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18' # or any LTS you use
 
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: npm install
 
-      - name: Run bot
-        run: node index.js
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    - name: Run Puppeteer bot
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        URL_FORM: ${{ secrets.URL_FORM }}
+        ANSWER_COMPANY_NAME: ${{ secrets.ANSWER_COMPANY_NAME }}
+      run: node app.js
