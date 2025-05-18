@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 const axios = require('axios');
 
-const FORM_URL = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSf7N37n9UWqW6YvuHTu9rq_6d75otBHK48qEw7aDeJy0u-VVg/formResponse';
-const COMPANY_NAME = 'فرنكوا';
+const FORM_URL = '';
+const COMPANY_NAME = '';
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID   = process.env.TELEGRAM_CHAT_ID;
