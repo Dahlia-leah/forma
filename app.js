@@ -16,7 +16,7 @@ function delay(ms) {
 async function initBrowser() {
   if (!browser) {
     browser = await puppeteer.launch({
-      headless: false, // visible browser for debugging; set to true for headless mode
+      headless: true, // visible browser for debugging; set to true for headless mode
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
       defaultViewport: { width: 1280, height: 800 },
     });
