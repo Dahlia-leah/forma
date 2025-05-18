@@ -1,0 +1,20 @@
+name: Form‑AutoFill
+
+on:
+  schedule:
+    # Runs daily at 00:00 UTC → 02:00 Cairo time
+    - cron: '55 5 * * *'
+  workflow_dispatch:  # manual “Run workflow” button
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with: node-version: '18'
+      - run: npm ci
+      - run: node index.js
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
